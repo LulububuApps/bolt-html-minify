@@ -81,7 +81,7 @@ class HtmlMinifyExtension extends SimpleExtension
             // Remove empty lines (sequence of line-end and white-space characters)
             '/[\r\n]+([\t ]?[\r\n]+)+/s'                                      => "\n",
             // Remove empty lines (between HTML tags); cannot remove just any line-end characters because in inline JS they can matter!
-            '/\>[\r\n\t ]+\</s'                                               => '>' . $keepOneSpace ? ' ' : '' . '<',
+            '/\>[\r\n\t ]+\</s'                                               => '>' . ($keepOneSpace ? ' ' : '') . '<',
             // Remove "empty" lines containing only JS's block end character; join with next line (e.g. "}\n}\n</script>" --> "}}</script>"
             '/}[\r\n\t ]+/s'                                                  => '}',
             '/}[\r\n\t ]+,[\r\n\t ]+/s'                                       => '},',
