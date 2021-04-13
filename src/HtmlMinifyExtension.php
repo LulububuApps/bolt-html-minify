@@ -24,16 +24,9 @@ class HtmlMinifyExtension extends SimpleExtension
         $dispatcher->addListener(
             KernelEvents::RESPONSE,
             function (FilterResponseEvent $event) {
-                $app      = $this->getContainer();
                 $response = $event->getResponse();
-                $request  = $event->getRequest();
 
                 if ($response instanceof StreamedResponse) {
-                    return $response;
-                }
-
-                // Only run if on the frontend and debug is disabled
-                if (!Zone::isFrontend($request) || $app['config']->get('general/debug')) {
                     return $response;
                 }
 
@@ -50,7 +43,10 @@ class HtmlMinifyExtension extends SimpleExtension
                 }
 
                 // Minify and return the HTML
-                $response->setContent($this->minify($response->getContent()));
+                $content  = $response->getContent();
+                $minified = $this->minify($content);
+
+                $response->setContent($minified);
 
                 return $response;
             },
@@ -65,7 +61,7 @@ class HtmlMinifyExtension extends SimpleExtension
     private function minify($content)
     {
         $config       = $this->getConfig();
-        $keepOneSpace = $config['keep_one_space'];
+        $keepOneSpace = array_key_exists('keep_one_space', $config) ? $config['keep_one_space'] : false;
 
         $replace = [
             // Remove HTML comments
@@ -100,6 +96,8 @@ class HtmlMinifyExtension extends SimpleExtension
             '/\r?\n|\r/'                                                      => ' ',
         ];
 
-        return preg_replace(array_keys($replace), array_values($replace), $content);
+        $minifiedContent = preg_replace(array_keys($replace), array_values($replace), $content);
+
+        return $minifiedContent;
     }
 }
