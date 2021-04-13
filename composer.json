@@ -2,12 +2,16 @@
     "name": "lulububu/html-minify",
     "description": "Minify HTML output",
     "type": "bolt-extension",
+    "version": "dev-master",
     "keywords": [
         "Minify HTML",
         "Site Optimization"
     ],
     "require": {
         "bolt/bolt": "^3.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4.7"
     },
     "license": "GPL-3.0",
     "authors": [
@@ -21,6 +25,12 @@
     "autoload": {
         "psr-4": {
             "Bolt\\Extension\\Lulububu\\HtmlMinify\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Bolt\\Extension\\Lulububu\\HtmlMinify\\Tests\\": "tests",
+            "Bolt\\Tests\\": "vendor/bolt/bolt/tests/phpunit/unit/"
         }
     },
     "extra": {
