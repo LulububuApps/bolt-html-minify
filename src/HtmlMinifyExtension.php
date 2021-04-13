@@ -32,17 +32,10 @@ class HtmlMinifyExtension extends SimpleExtension
 
                 $contentType = $response->headers->get('Content-Type');
 
-                // Don't minify images
-                if (strpos($contentType, 'image') !== false) {
+                if ($contentType !== 'text/html') {
                     return $response;
                 }
 
-                // Don't minify JSON
-                if ($contentType === 'application/json') {
-                    return $response;
-                }
-
-                // Minify and return the HTML
                 $content  = $response->getContent();
                 $minified = $this->minify($content);
 
