@@ -1,6 +1,6 @@
 <?php
 
-namespace Bolt\Extension\Koolserve\HtmlMinify;
+namespace Bolt\Extension\Lulububu\HtmlMinify;
 
 use Bolt\Controller\Zone;
 use Bolt\Extension\SimpleExtension;
